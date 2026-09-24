@@ -95,6 +95,25 @@ services:
     mem_limit: 600m
     restart: unless-stopped
 
+  oauth2-proxy:
+      image: quay.io/oauth2-proxy/oauth2-proxy:latest
+      container_name: oauth2-proxy-${SERVICE_NAME}
+      command: --http-address=0.0.0.0:4180
+      environment:
+        OAUTH2_PROXY_PROVIDER: keycloak-oidc
+        OAUTH2_PROXY_OIDC_ISSUER_URL: ${OIDC_ISSUER_URL}
+        OAUTH2_PROXY_CLIENT_ID: ${OIDC_CLIENT_ID}
+        OAUTH2_PROXY_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
+        OAUTH2_PROXY_COOKIE_SECRET: ${COOKIE_SECRET}
+        OAUTH2_PROXY_COOKIE_NAME: _oauth2_${SERVICE_NAME}
+        OAUTH2_PROXY_EMAIL_DOMAINS: "*"
+        OAUTH2_PROXY_UPSTREAMS: ${UPSTREAM_URL}
+        OAUTH2_PROXY_REDIRECT_URL: ${REDIRECT_URL}
+      ports: 
+         - "${PROXY_PORT}:4180"
+      extra_hosts:
+         - "keycloak.turyan.site:10.0.0.12"
+
 networks:
   default:
     name: data-platform
