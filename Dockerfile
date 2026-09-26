@@ -5,7 +5,7 @@
 # isolation loads each connector's classpath independently; a driver
 # placed anywhere else won't be visible to it.
 
-FROM debezium/connect:3.6
+FROM quay.io/debezium/connect:3.6
 
 ARG CLICKHOUSE_JDBC_VERSION=0.6.3
 
