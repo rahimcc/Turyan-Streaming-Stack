@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
 
   connect:
-    image: quay.io/debezium/connect:3.6
+    image: ghcr.io/rahimcc/turyan-streaming-stack:latest
     container_name: connect
     depends_on:
       kafka-stream:
